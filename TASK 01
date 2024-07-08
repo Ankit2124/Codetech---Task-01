@@ -1,0 +1,113 @@
+/*This code creates a simple Todo List application using HTML, CSS, and JavaScript. 
+
+HTML :
+The <head> section includes meta tags for character set and viewport settings, a title for the app, and embedded CSS for styling.
+The <body> section contains the main structure of the Todo List app:
+A header (<h1>) displaying "Todo List".
+A <div> containing an input field (<input>) for entering new tasks and a button (<button>) for adding tasks.
+An unordered list (<ul>) with the id taskList where the tasks will be displayed.
+
+CSS :
+Basic styling for the body, input field, button, and task items:
+The body is styled with a font, centered text, margin, and background color.
+The input field and button have specific widths, padding, and margins.
+Task items have margins, padding, a border, and a flex display to space out elements.
+Completed tasks have a line-through text decoration and a gray color
+
+SCRIPT :
+The JavaScript code is executed once the DOM content is fully loaded.
+The input field, button, and task list are selected by their IDs.
+An event listener is added to the "Add Task" button to trigger the addTask function:
+This function reads the input value, trims whitespace, and if it's not empty, creates a new task item (<li>).
+Each task item includes the task text, a delete button, and a complete button.
+The delete button triggers the deleteTask function, which removes the task item from the list.
+The complete button triggers the completeTask function, which toggles the 'completed' class on the task item, applying the corresponding CSS styles.
+
+Overall, this code sets up a basic interactive Todo List application with task addition, deletion, and completion functionalities
+*/
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo List App</title>
+<style>
+
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+margin: 20px;
+background-color: purple; 
+}
+}
+
+#taskInput {
+width: 300px;
+padding: 8px;
+margin-right: 10px;
+}
+
+#addTaskBtn, #taskList {
+margin-top: 10px;
+}
+
+.taskItem {
+margin: 10px;
+padding: 8px;
+border: 1px solid #ddd;
+display: flex;
+justify-content: space-between;
+}
+
+.completed {
+text-decoration: line-through;
+color: #777;
+}
+</style>
+</head>
+
+<body>
+<h1>Todo List</h1>
+<div>
+<input type="text" id="taskInput" placeholder="Enter a new task">
+<button id="addTaskBtn">Add Task</button>
+</div>
+<ul id="taskList"></ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+const taskInput = document.getElementById('taskInput');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const taskList = document.getElementById('taskList');
+addTaskBtn.addEventListener('click', addTask);
+function addTask() {
+const taskText = taskInput.value.trim();
+if (taskText === '') return;
+const taskItem = document.createElement('li');
+taskItem.className = 'taskItem';
+const taskTextElement = document.createElement('span');
+taskTextElement.textContent = taskText;
+const deleteButton = document.createElement('button');
+deleteButton.textContent = 'Delete';
+deleteButton.addEventListener('click', deleteTask);
+const completeButton = document.createElement('button');
+completeButton.textContent = 'Complete';
+completeButton.addEventListener('click', completeTask);
+taskItem.appendChild(taskTextElement);
+taskItem.appendChild(deleteButton);
+taskItem.appendChild(completeButton);
+taskList.appendChild(taskItem);
+taskInput.value = '';
+}
+function deleteTask() {
+const taskItem = this.parentNode;
+taskList.removeChild(taskItem);
+}
+function completeTask() {
+const taskItem = this.parentNode;
+taskItem.classList.toggle('completed');
+}
+});
+</script>
+</body>
+</html>
